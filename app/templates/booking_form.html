@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Novo Agendamento{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0">Novo Agendamento</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="data" class="form-label">Data:</label>
+                        <input type="date" class="form-control" id="data" name="data" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="sala" class="form-label">Sala:</label>
+                        <select class="form-control" id="sala" name="sala" required>
+                            <option value="Sala 01">Sala 01</option>
+                            <option value="Leg01">Leg01</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="horario" class="form-label">Horário:</label>
+                        <select class="form-control" id="horario" name="horario" required>
+                            <option value="8-9">8:00 - 9:00</option>
+                            <option value="9-10">9:00 - 10:00</option>
+                            <option value="10-11">10:00 - 11:00</option>
+                            <option value="11-12">11:00 - 12:00</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="responsavel" class="form-label">Responsável:</label>
+                        <input type="text" class="form-control" id="responsavel" name="responsavel" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="discord" class="form-label">Discord: (opcional)</label>
+                        <input type="text" class="form-control" id="discord" name="discord">
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">Agendar</button>
+                        <a href="{{ url_for('main.home') }}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

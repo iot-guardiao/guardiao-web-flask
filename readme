@@ -1,0 +1,10 @@
+python -m venv venv
+source venv/bin/activate
+
+pip install -r requirements.txt
+
+Create a .env file in the root directory:
+SECRET_KEY=your-secret-key-here
+FASTAPI_URL=http://192.168.1.123
+
+python run.py
