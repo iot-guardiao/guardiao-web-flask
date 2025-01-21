@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+from app.config import Config
 import requests
 from datetime import datetime
 
@@ -11,17 +12,19 @@ def home():
 @main.route('/novo-agendamento', methods=['GET', 'POST'])
 def new_booking():
     if request.method == 'POST':
+        # Captura os dados do formulário
         booking_data = {
-            'data': request.form.get('data'),
-            'sala': request.form.get('sala'),
-            'horario': request.form.get('horario'),
             'responsavel': request.form.get('responsavel'),
-            'email': request.form.get('email'),
-            'discord': request.form.get('discord', '')
+            'sala': request.form.get('sala'),
+            'data': request.form.get('data'),
+            'hora_inicio': request.form.get('hora_inicio'),  # Corrigido
+            'hora_fim': request.form.get('hora_fim'),        # Corrigido
+            'email': request.form.get('email')
         }
-        
+
         try:
-            response = requests.post(f"{Config.FASTAPI_URL}/agendar", json=booking_data)
+            # Faz o POST para o backend
+            response = requests.post(f"{Config.FASTAPI_URL}/agendamentos/", json=booking_data)
             if response.status_code == 200:
                 flash('Agendamento realizado com sucesso!', 'success')
                 return redirect(url_for('main.my_bookings'))
@@ -35,9 +38,10 @@ def new_booking():
 @main.route('/meus-agendamentos')
 def my_bookings():
     try:
-        response = requests.get(f"{Config.FASTAPI_URL}/agendamentos")
+        # Faz o GET para listar os agendamentos
+        response = requests.get(f"{Config.FASTAPI_URL}/agendamentos/")
         if response.status_code == 200:
-            bookings = response.json()
+            bookings = response.json().get('agendamentos', [])
         else:
             bookings = []
             flash('Erro ao carregar agendamentos.', 'error')
